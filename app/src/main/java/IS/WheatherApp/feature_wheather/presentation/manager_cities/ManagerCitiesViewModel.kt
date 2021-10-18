@@ -80,17 +80,58 @@ class ManagerCitiesViewModel @Inject constructor(
 
     private fun getCities() {
         getCitiesJob?.cancel()
-        allWeather.value = listOf()
         getCitiesJob = citiesUseCase
             .getCities()
             .onEach { cities ->
+                allWeather.value = emptyList()
                 cities.sortedBy { it.id }.forEach { city ->
                     val weatherData = Gson().fromJson(city.weatherData, WeatherDataClass::class.java)
                     Log.e("getGsonData", weatherData.toString())
                     Log.e("myTime", (System.currentTimeMillis()/1000).toString())
                     if (((System.currentTimeMillis()/1000) - weatherData.now) > 1800) {
-                        city.id?.let { getWeather(lat = city.lat, lon = city.lon, id = it, name = city.name) }
+                        Log.e(
+                            "update",
+                            "${city.name} time left: ${((System.currentTimeMillis() / 1000)
+                                    - weatherData.now) / 60}min"
+                        )
+                        city.id?.let {
+                            weatherUseCase.getWeather(lat = city.lat, lon = city.lon).onEach { result ->
+                                when(result) {
+                                    is Resource.Success -> {
+                                        result.data?.let {
+                                            Log.e("success updateCity", city.name)
+                                            citiesUseCase.updateCity(City(
+                                                id = city.id,
+                                                name = city.name,
+                                                lat = city.lat,
+                                                lon = city.lon,
+                                                icon = result.data.fact.condition,
+                                                tempNow = result.data.fact.temp.toString(),
+                                                weatherData = Gson().toJson(result.data)
+                                            ))
+                                        }
+                                        loadError.value = ""
+                                        isLoading.value = false
+                                    }
+                                    is Resource.Loading -> {
+                                        Log.e("Loading", "true")
+                                        loadError.value = ""
+                                        isLoading.value = true
+                                    }
+                                    is Resource.Error -> {
+                                        Log.e("error update", result.message!!)
+                                        loadError.value = result.message!!
+                                        isLoading.value = false
+                                    }
+                                }
+                            }.launchIn(viewModelScope)
+                        }
                     } else {
+                        Log.e(
+                            "no update",
+                            "${city.name} time left: ${((System.currentTimeMillis() / 1000) 
+                                    - weatherData.now) / 60}min"
+                        )
                         allWeather.value += CurrentCityWeather(
                             id = city.id!!,
                             name = city.name,
@@ -107,10 +148,5 @@ class ManagerCitiesViewModel @Inject constructor(
                 )
             }
             .launchIn(viewModelScope)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        allWeather.value = listOf()
     }
 }
