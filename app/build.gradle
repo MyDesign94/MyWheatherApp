@@ -26,6 +26,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField 'String', 'YANDEX_WEATHER_API_KEY', getProps("YANDEX_WEATHER_API_KEY")
+
         }
     }
     compileOptions {
@@ -146,4 +149,15 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.4.0'
 
 
+}
+
+def getProps(String propName) {
+    def propsFile = rootProject.file('local.properties')
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        return props[propName]
+    } else {
+        return "";
+    }
 }
