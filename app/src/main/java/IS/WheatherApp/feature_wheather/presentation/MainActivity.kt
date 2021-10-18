@@ -7,19 +7,19 @@ import IS.WheatherApp.feature_wheather.presentation.main_wheather.MainWeatherScr
 import IS.WheatherApp.feature_wheather.presentation.manager_cities.ManagerCitiesScreen
 import IS.WheatherApp.feature_wheather.presentation.nex_seven_days.NextSevenDaysScreen
 import IS.WheatherApp.feature_wheather.presentation.result_add_new_location.ResultAddNewLocation
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import IS.WheatherApp.feature_wheather.presentation.ui.theme.MyWheatherAppTheme
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavType
@@ -27,7 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.google.android.gms.location.*
+import com.google.android.gms.location.* // ktlint-disable no-wildcard-imports
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -70,7 +70,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(
                             route = Screen.WeatherNextSevenDays.route +
-                                    "?cityId={cityId}",
+                                "?cityId={cityId}",
                             arguments = listOf(
                                 navArgument(
                                     name = "cityId"
@@ -83,7 +83,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(
                             route = Screen.ResultAddNewLocation.route +
-                                    "?data={data}",
+                                "?data={data}",
                             arguments = listOf(
                                 navArgument(name = "data") {
                                     type = NavType.StringType
@@ -140,10 +140,16 @@ class MainActivity : ComponentActivity() {
         when (requestCode) {
             1 -> {
                 if (grantResults.isNotEmpty() && grantResults[0] ==
-                    PackageManager.PERMISSION_GRANTED) {
-                    if ((ContextCompat.checkSelfPermission(this@MainActivity,
-                            Manifest.permission.ACCESS_FINE_LOCATION) ===
-                                PackageManager.PERMISSION_GRANTED)) {
+                    PackageManager.PERMISSION_GRANTED
+                ) {
+                    if ((
+                        ContextCompat.checkSelfPermission(
+                                this@MainActivity,
+                                Manifest.permission.ACCESS_FINE_LOCATION
+                            ) ===
+                            PackageManager.PERMISSION_GRANTED
+                        )
+                    ) {
                         Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
                     }
                 } else {
@@ -155,7 +161,3 @@ class MainActivity : ComponentActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }
-
-
-
-

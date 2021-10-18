@@ -10,13 +10,13 @@ import IS.WheatherApp.feature_wheather.presentation.ui.theme.TextColor2
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.* // ktlint-disable no-wildcard-imports
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.* // ktlint-disable no-wildcard-imports
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
@@ -42,13 +42,13 @@ import kotlinx.coroutines.flow.collectLatest
 fun AddNewLocationScreen(
     navController: NavController,
     viewModel: AddCityViewModel = hiltViewModel()
-){
+) {
     val scaffoldState = rememberScaffoldState()
     val (value, onValueChange) = remember { mutableStateOf("") }
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
-            when(event) {
+            when (event) {
                 is AddCityViewModel.UiEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = event.message
@@ -80,19 +80,23 @@ fun AddNewLocationScreen(
                     onValueChange = onValueChange,
                     maxLines = 1,
                     textStyle = TextStyle(fontSize = 17.sp),
-                    leadingIcon = { Icon(
-                        Icons.Filled.Search,
-                        null,
-                        tint = Color.Gray
-                    ) },
-                    trailingIcon = { Icon(
-                        Icons.Default.Clear,
-                        contentDescription = "clean search",
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .background(BackgroundCardColor)
-                            .clickable { }
-                    ) },
+                    leadingIcon = {
+                        Icon(
+                            Icons.Filled.Search,
+                            null,
+                            tint = Color.Gray
+                        )
+                    },
+                    trailingIcon = {
+                        Icon(
+                            Icons.Default.Clear,
+                            contentDescription = "clean search",
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .background(BackgroundCardColor)
+                                .clickable { }
+                        )
+                    },
                     modifier = Modifier
                         .weight(1f)
                         .height(50.dp)
@@ -115,7 +119,6 @@ fun AddNewLocationScreen(
                         .padding(5.dp)
                         .clickable { navController.navigateUp() }
                 )
-
             }
             Spacer(modifier = Modifier.height(30.dp))
             Text(

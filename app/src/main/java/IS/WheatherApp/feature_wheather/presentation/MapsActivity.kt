@@ -1,16 +1,15 @@
 package IS.WheatherApp.feature_wheather.presentation
 
 import IS.WheatherApp.R
-import androidx.appcompat.app.AppCompatActivity
+import IS.WheatherApp.databinding.ActivityMapsBinding
 import android.os.Bundle
-
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import IS.WheatherApp.databinding.ActivityMapsBinding
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 

@@ -2,7 +2,6 @@ package IS.WheatherApp.feature_wheather.domain.use_case.weather_use_case
 
 import IS.WheatherApp.feature_wheather.domain.repository.weather_repository.WeatherRepository
 import IS.WheatherApp.feature_wheather.domain.util.Resource
-import android.util.Log
 import com.example.weatherapp.WeatherService.WeatherModels.WeatherDataClass
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -25,7 +24,7 @@ class GetWeatherUseCase @Inject constructor(
         } catch (e: HttpException) {
             emit(
                 Resource.Error<WeatherDataClass>(
-                    e.localizedMessage?: "An unexpected error occurred"
+                    e.localizedMessage ?: "An unexpected error occurred"
                 )
             )
         } catch (e: IOException) {

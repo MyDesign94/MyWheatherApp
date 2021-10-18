@@ -1,12 +1,11 @@
 package IS.WheatherApp.feature_wheather.presentation.result_add_new_location.component
 
-import IS.WheatherApp.R
 import IS.WheatherApp.feature_wheather.presentation.main_wheather.component.iconWeather
 import IS.WheatherApp.feature_wheather.presentation.ui.theme.BackgroundCardColor
 import IS.WheatherApp.feature_wheather.presentation.ui.theme.TextColor3
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.* // ktlint-disable no-wildcard-imports
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -24,12 +23,13 @@ fun WeekItem(
     weatherDay: Int,
     weatherNight: Int,
     icon: String
-){
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(top = 10.dp)
-        .clip(shape = RoundedCornerShape(15.dp))
-        .background(BackgroundCardColor)
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp)
+            .clip(shape = RoundedCornerShape(15.dp))
+            .background(BackgroundCardColor)
     ) {
         Row(
             modifier = Modifier
@@ -61,17 +61,15 @@ fun WeekItem(
             }
             Column(modifier = Modifier.padding(10.dp)) {
                 Text(
-                    text = "${weatherDay}℃",
+                    text = "$weatherDay℃",
                     style = MaterialTheme.typography.h6,
                 )
                 Text(
-                    text = "${weatherNight}℃",
+                    text = "$weatherNight℃",
                     style = MaterialTheme.typography.h6,
                     color = TextColor3
                 )
             }
         }
     }
-
 }
-

@@ -22,7 +22,7 @@ import javax.inject.Inject
 class ManagerCitiesViewModel @Inject constructor(
     private val citiesUseCase: CitiesUseCase,
     private val weatherUseCase: WeatherUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _stateCities = mutableStateOf(CitiesState())
     val stateCities: State<CitiesState> = _stateCities
@@ -38,9 +38,9 @@ class ManagerCitiesViewModel @Inject constructor(
     }
 
     private fun getWeather(lat: String, lon: String, id: Int, name: String) {
-        Log.e("manager_city_vm_data_gps", "$lat - $lon - $id")
+        Log.e("manager_city_vm_gps", "$lat - $lon - $id")
         weatherUseCase.getWeather(lat = lat, lon = lon).onEach { result ->
-            when(result) {
+            when (result) {
                 is Resource.Success -> {
                     result.data?.let {
                         allWeather.value += CurrentCityWeather(
@@ -53,15 +53,17 @@ class ManagerCitiesViewModel @Inject constructor(
                             weatherData = result.data
                         )
                         Log.e("allWeather.vale", allWeather.value.size.toString())
-                        citiesUseCase.updateCity(City(
-                            id = id,
-                            name = name,
-                            lat = lat,
-                            lon = lon,
-                            icon = result.data.fact.condition,
-                            tempNow = result.data.fact.temp.toString(),
-                            weatherData = Gson().toJson(result.data)
-                        ))
+                        citiesUseCase.updateCity(
+                            City(
+                                id = id,
+                                name = name,
+                                lat = lat,
+                                lon = lon,
+                                icon = result.data.fact.condition,
+                                tempNow = result.data.fact.temp.toString(),
+                                weatherData = Gson().toJson(result.data)
+                            )
+                        )
                     }
                     loadError.value = ""
                     isLoading.value = false
@@ -87,28 +89,32 @@ class ManagerCitiesViewModel @Inject constructor(
                 cities.sortedBy { it.id }.forEach { city ->
                     val weatherData = Gson().fromJson(city.weatherData, WeatherDataClass::class.java)
                     Log.e("getGsonData", weatherData.toString())
-                    Log.e("myTime", (System.currentTimeMillis()/1000).toString())
-                    if (((System.currentTimeMillis()/1000) - weatherData.now) > 1800) {
+                    Log.e("myTime", (System.currentTimeMillis() / 1000).toString())
+                    if (((System.currentTimeMillis() / 1000) - weatherData.now) > 1800) {
                         Log.e(
                             "update",
-                            "${city.name} time left: ${((System.currentTimeMillis() / 1000)
-                                    - weatherData.now) / 60}min"
+                            "${city.name} time left: ${(
+                                (System.currentTimeMillis() / 1000) -
+                                    weatherData.now
+                                ) / 60}min"
                         )
                         city.id?.let {
                             weatherUseCase.getWeather(lat = city.lat, lon = city.lon).onEach { result ->
-                                when(result) {
+                                when (result) {
                                     is Resource.Success -> {
                                         result.data?.let {
                                             Log.e("success updateCity", city.name)
-                                            citiesUseCase.updateCity(City(
-                                                id = city.id,
-                                                name = city.name,
-                                                lat = city.lat,
-                                                lon = city.lon,
-                                                icon = result.data.fact.condition,
-                                                tempNow = result.data.fact.temp.toString(),
-                                                weatherData = Gson().toJson(result.data)
-                                            ))
+                                            citiesUseCase.updateCity(
+                                                City(
+                                                    id = city.id,
+                                                    name = city.name,
+                                                    lat = city.lat,
+                                                    lon = city.lon,
+                                                    icon = result.data.fact.condition,
+                                                    tempNow = result.data.fact.temp.toString(),
+                                                    weatherData = Gson().toJson(result.data)
+                                                )
+                                            )
                                         }
                                         loadError.value = ""
                                         isLoading.value = false
@@ -129,8 +135,10 @@ class ManagerCitiesViewModel @Inject constructor(
                     } else {
                         Log.e(
                             "no update",
-                            "${city.name} time left: ${((System.currentTimeMillis() / 1000) 
-                                    - weatherData.now) / 60}min"
+                            "${city.name} time left: ${(
+                                (System.currentTimeMillis() / 1000) -
+                                    weatherData.now
+                                ) / 60}min"
                         )
                         allWeather.value += CurrentCityWeather(
                             id = city.id!!,

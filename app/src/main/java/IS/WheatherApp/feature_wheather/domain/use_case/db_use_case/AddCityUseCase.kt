@@ -4,8 +4,7 @@ import IS.WheatherApp.feature_wheather.domain.model.City
 import IS.WheatherApp.feature_wheather.domain.model.InvalidCityItemException
 import IS.WheatherApp.feature_wheather.domain.repository.db_repository.CitiesRepository
 
-
-class AddCityUseCase (
+class AddCityUseCase(
     private val repository: CitiesRepository
 ) {
 

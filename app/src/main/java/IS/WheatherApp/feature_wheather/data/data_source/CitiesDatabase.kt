@@ -8,9 +8,9 @@ import androidx.room.RoomDatabase
     entities = [City::class],
     version = 1
 )
-abstract class CitiesDatabase : RoomDatabase(){
+abstract class CitiesDatabase : RoomDatabase() {
 
-    abstract val cityDao : CityDao
+    abstract val cityDao: CityDao
 
     companion object {
         const val DATABASE_NAME = "cities_db"

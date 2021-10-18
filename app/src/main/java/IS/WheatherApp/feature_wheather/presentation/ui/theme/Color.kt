@@ -7,7 +7,6 @@ val Purple500 = Color(0xFF6200EE)
 val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 
-
 val DetailedText = Color(0xFF0A173A)
 val NxtDays = Color(0xFF1884b5)
 val BgLMod = Color(0xFF6f9eee)

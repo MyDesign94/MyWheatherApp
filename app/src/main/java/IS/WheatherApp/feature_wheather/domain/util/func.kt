@@ -1,18 +1,17 @@
 package IS.WheatherApp.feature_wheather.domain.util
 
 import android.annotation.SuppressLint
-import android.util.Log
 import com.example.weatherapp.WeatherService.WeatherModels.RowTimeWeatherItems
 import com.example.weatherapp.WeatherService.WeatherModels.WeatherDataClass
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 
 fun collectionsOfItemsRow(weatherData: WeatherDataClass?, dayTime: Int = 0): MutableList<RowTimeWeatherItems> {
     if (weatherData != null) {
-        val currentH = if (weatherData.now_dt.split("T")[1].substring(0,2).toInt()+3 > 23) {
-            weatherData.now_dt.split("T")[1].substring(0,2).toInt()-21
+        val currentH = if (weatherData.now_dt.split("T")[1].substring(0, 2).toInt() + 3 > 23) {
+            weatherData.now_dt.split("T")[1].substring(0, 2).toInt() - 21
         } else {
-            weatherData.now_dt.split("T")[1].substring(0,2).toInt()+3
+            weatherData.now_dt.split("T")[1].substring(0, 2).toInt() + 3
         }
         val items = mutableListOf<RowTimeWeatherItems>()
         for (i in currentH.rangeTo(23)) {
@@ -27,9 +26,10 @@ fun collectionsOfItemsRow(weatherData: WeatherDataClass?, dayTime: Int = 0): Mut
         for (i in 0 until currentH) {
             items.add(
                 RowTimeWeatherItems(
-                time = weatherData.forecasts[dayTime+1].hours[i].hour,
-                weather = weatherData.forecasts[dayTime+1].hours[i].condition,
-                temperature = weatherData.forecasts[dayTime+1].hours[i].temp.toString())
+                    time = weatherData.forecasts[dayTime + 1].hours[i].hour,
+                    weather = weatherData.forecasts[dayTime + 1].hours[i].condition,
+                    temperature = weatherData.forecasts[dayTime + 1].hours[i].temp.toString()
+                )
             )
         }
         return items
@@ -67,13 +67,13 @@ val listOfAllItems = mutableListOf<RowTimeWeatherItems>(
 fun getListOfDaysOfWeek(): List<String> {
     val date: Date = Calendar.getInstance().time
     val simpleDateFormat = SimpleDateFormat("EEEE")
-    return when(simpleDateFormat.format(date)) {
+    return when (simpleDateFormat.format(date)) {
         "Monday" -> listOf<String>("Today", "Tomorrow", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
         "Tuesday" -> listOf<String>("Today", "Tomorrow", "Thursday", "Friday", "Saturday", "Sunday", "Monday")
         "Wednesday" -> listOf<String>("Today", "Tomorrow", "Friday", "Saturday", "Sunday", "Monday", "Tuesday")
         "Thursday" -> listOf<String>("Today", "Tomorrow", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday")
         "Friday" -> listOf<String>("Today", "Tomorrow", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday")
         "Saturday" -> listOf<String>("Today", "Tomorrow", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-        else ->  listOf<String>("Today", "Tomorrow", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+        else -> listOf<String>("Today", "Tomorrow", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
     }
 }

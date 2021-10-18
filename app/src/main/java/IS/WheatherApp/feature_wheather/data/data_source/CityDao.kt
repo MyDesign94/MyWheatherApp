@@ -1,7 +1,7 @@
 package IS.WheatherApp.feature_wheather.data.data_source
 
 import IS.WheatherApp.feature_wheather.domain.model.City
-import androidx.room.*
+import androidx.room.* // ktlint-disable no-wildcard-imports
 import kotlinx.coroutines.flow.Flow
 
 @Dao

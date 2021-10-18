@@ -17,5 +17,4 @@ object ContextModule {
     fun provideContext(application: Application): Context {
         return application
     }
-
 }

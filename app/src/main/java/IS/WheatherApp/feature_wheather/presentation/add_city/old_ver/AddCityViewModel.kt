@@ -19,26 +19,26 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import okhttp3.internal.wait
 import javax.inject.Inject
+
 @HiltViewModel
 class AddCityViewModel @Inject constructor(
     private val useCase: CitiesUseCase,
     private val weatherUseCase: WeatherUseCase,
     private val context: Context
-): ViewModel() {
+) : ViewModel() {
 
     private val _cityLatitude = mutableStateOf(
         AddCityTextFieldState(
-        hint = "Enter Latitude…"
-    )
+            hint = "Enter Latitude…"
+        )
     )
     val cityLatitude: State<AddCityTextFieldState> = _cityLatitude
 
     private val _cityLongitude = mutableStateOf(
         AddCityTextFieldState(
-        hint = "Enter Longitude…"
-    )
+            hint = "Enter Longitude…"
+        )
     )
     val cityLongitude: State<AddCityTextFieldState> = _cityLongitude
 
@@ -48,7 +48,7 @@ class AddCityViewModel @Inject constructor(
     private var currentCityId: Int? = null
 
     fun onEvent(event: AddCityEvent) {
-        when(event) {
+        when (event) {
             is AddCityEvent.EnteredLat -> {
                 _cityLatitude.value = cityLatitude.value.copy(
                     text = event.value
@@ -57,7 +57,7 @@ class AddCityViewModel @Inject constructor(
             is AddCityEvent.ChangeLatFocus -> {
                 _cityLatitude.value = cityLatitude.value.copy(
                     isHintVisible = !event.focusState.isFocused &&
-                            cityLatitude.value.text.isBlank()
+                        cityLatitude.value.text.isBlank()
                 )
             }
             is AddCityEvent.EnteredLon -> {
@@ -68,7 +68,7 @@ class AddCityViewModel @Inject constructor(
             is AddCityEvent.ChangeLonFocus -> {
                 _cityLongitude.value = cityLongitude.value.copy(
                     isHintVisible = !event.focusState.isFocused &&
-                            cityLongitude.value.text.isBlank()
+                        cityLongitude.value.text.isBlank()
                 )
             }
             is AddCityEvent.SaveCity -> {
@@ -78,7 +78,7 @@ class AddCityViewModel @Inject constructor(
                             lat = cityLatitude.value.text,
                             lon = cityLongitude.value.text
                         ).onEach { result ->
-                            when(result) {
+                            when (result) {
                                 is Resource.Success -> {
                                     useCase.addCity(
                                         City(
@@ -131,10 +131,8 @@ class AddCityViewModel @Inject constructor(
         return "${list[0].countryName}, ${list[0].locality}"
     }
 
-
-
     sealed class UiEvent {
-        data class ShowSnackbar(val message: String): UiEvent()
-        object SaveCity: UiEvent()
+        data class ShowSnackbar(val message: String) : UiEvent()
+        object SaveCity : UiEvent()
     }
 }

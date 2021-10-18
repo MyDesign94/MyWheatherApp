@@ -7,5 +7,5 @@ interface WeatherRepository {
     suspend fun getWeather(
         lat: String,
         lon: String
-    ) : WeatherDataClass
+    ): WeatherDataClass
 }

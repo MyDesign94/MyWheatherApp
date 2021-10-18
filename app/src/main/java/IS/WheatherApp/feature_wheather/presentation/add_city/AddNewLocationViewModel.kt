@@ -24,7 +24,7 @@ class AddNewLocationViewModel @Inject constructor(
     private val useCase: CitiesUseCase,
     private val weatherUseCase: WeatherUseCase,
     private val context: Context
-): ViewModel() {
+) : ViewModel() {
 
     private val _searchState = mutableStateOf(String())
     val searchState: State<String> = _searchState
@@ -34,7 +34,6 @@ class AddNewLocationViewModel @Inject constructor(
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
-
 
     private fun getAddress(address: String): Address? {
         val geocoder = Geocoder(context)
@@ -47,7 +46,7 @@ class AddNewLocationViewModel @Inject constructor(
     }
 
     fun onEvent(event: AddCityEvent) {
-        when(event) {
+        when (event) {
             is AddCityEvent.EnteredCity -> {
                 _searchState.value = event.value
                 val address = getAddress(event.value)
@@ -56,24 +55,21 @@ class AddNewLocationViewModel @Inject constructor(
                 }
             }
             is AddCityEvent.SaveCity -> {
-
-
             }
         }
-
     }
 
     private fun getWeather(lat: String, lon: String) {
-        Log.e("gps", "${lat} - ${lon}")
+        Log.e("gps", "$lat - $lon")
         weatherUseCase.getWeather(lat = lat, lon = lon).onEach { result ->
-            when(result) {
+            when (result) {
                 is Resource.Success -> {
                     _weatherState.value = MainWeatherState(weatherData = result.data)
                     Log.e("data", result.data.toString())
                 }
                 is Resource.Error -> {
                     _weatherState.value = MainWeatherState(
-                        error = result.message?: "An unexpected error occured"
+                        error = result.message ?: "An unexpected error occured"
                     )
                 }
                 is Resource.Loading -> {
@@ -84,7 +80,7 @@ class AddNewLocationViewModel @Inject constructor(
     }
 
     sealed class UiEvent {
-        data class ShowSnackbar(val message: String): UiEvent()
-        object SaveCity: UiEvent()
+        data class ShowSnackbar(val message: String) : UiEvent()
+        object SaveCity : UiEvent()
     }
 }

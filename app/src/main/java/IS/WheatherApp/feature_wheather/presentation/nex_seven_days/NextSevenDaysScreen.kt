@@ -2,14 +2,11 @@ package IS.WheatherApp.feature_wheather.presentation.nex_seven_days
 
 import IS.WheatherApp.feature_wheather.domain.util.getListOfDaysOfWeek
 import IS.WheatherApp.feature_wheather.presentation.result_add_new_location.component.WeekItem
-import IS.WheatherApp.feature_wheather.presentation.ui.theme.NxtDays
-import IS.WheatherApp.feature_wheather.presentation.ui.theme.TextColor2
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.* // ktlint-disable no-wildcard-imports
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.*
+import androidx.compose.material.* // ktlint-disable no-wildcard-imports
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -66,9 +63,9 @@ fun NextSevenDaysScreen(
                         item {
                             WeekItem(
                                 dayOfWeek = getListOfDaysOfWeek()[i],
-                                day =data.forecasts[i].date.substring(5,10),
-                                weatherDay =data.forecasts[i].parts.day.temp_avg,
-                                weatherNight =data.forecasts[i].parts.night.temp_avg,
+                                day = data.forecasts[i].date.substring(5, 10),
+                                weatherDay = data.forecasts[i].parts.day.temp_avg,
+                                weatherNight = data.forecasts[i].parts.night.temp_avg,
                                 icon = data.forecasts[i].parts.day.condition
                             )
                         }
@@ -76,6 +73,5 @@ fun NextSevenDaysScreen(
                 }
             }
         }
-
     }
 }

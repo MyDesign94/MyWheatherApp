@@ -9,21 +9,14 @@ import IS.WheatherApp.feature_wheather.domain.util.LocationLiveData
 import IS.WheatherApp.feature_wheather.domain.util.Resource
 import IS.WheatherApp.feature_wheather.domain.util.StandardLocation
 import IS.WheatherApp.feature_wheather.presentation.main_wheather.MainWeatherState
-import IS.WheatherApp.feature_wheather.presentation.main_wheather.UserLocationState
-import android.Manifest
-import android.Manifest.permission.ACCESS_COARSE_LOCATION
-import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Context
-import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.location.*
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -31,33 +24,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
-import android.app.Activity
-import android.location.Location
-import androidx.core.content.ContextCompat
-import android.os.Looper
-
-import com.google.android.gms.location.LocationResult
-
-import com.google.android.gms.location.LocationCallback
-
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
-
-import com.google.android.gms.location.SettingsClient
-
-import com.google.android.gms.location.LocationSettingsRequest
-import com.google.android.gms.maps.model.LatLng
-
-import android.widget.Toast
-import com.google.android.gms.tasks.OnFailureListener
-
-import com.google.android.gms.tasks.OnSuccessListener
-
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.tasks.Task
-
 
 @HiltViewModel
 class ResultAddNewLocationViewModel @Inject constructor(
@@ -65,7 +32,7 @@ class ResultAddNewLocationViewModel @Inject constructor(
     private val citiesUseCase: CitiesUseCase,
     private val context: Context,
     savedStateHandle: SavedStateHandle
-): ViewModel() {
+) : ViewModel() {
 
     private val locationData = LocationLiveData(context)
 
@@ -89,7 +56,6 @@ class ResultAddNewLocationViewModel @Inject constructor(
                     data = data
                 )
                 getWeather(lat = data.lat.toString(), lon = data.lon.toString())
-
             } else {
                 Log.e("data_name", data.name)
                 locationData.observe(APP_ACTIVITY, {
@@ -104,20 +70,19 @@ class ResultAddNewLocationViewModel @Inject constructor(
                     Log.e("location", it.toString())
                 })
             }
-
         }
     }
 
     private fun getWeather(lat: String, lon: String) {
         weatherUseCase.getWeather(lat = lat, lon = lon).onEach { result ->
-            when(result) {
+            when (result) {
                 is Resource.Success -> {
                     _stateWeather.value = MainWeatherState(weatherData = result.data)
                     Log.e("data", result.data.toString())
                 }
                 is Resource.Error -> {
                     _stateWeather.value = MainWeatherState(
-                        error = result.message?: "An unexpected error occured"
+                        error = result.message ?: "An unexpected error occured"
                     )
                 }
                 is Resource.Loading -> {
@@ -154,7 +119,6 @@ class ResultAddNewLocationViewModel @Inject constructor(
                     )
                 )
             }
-
         }
     }
 
@@ -168,8 +132,7 @@ class ResultAddNewLocationViewModel @Inject constructor(
     }
 
     sealed class UiEvent {
-        data class ShowSnackbar(val message: String): UiEvent()
-        object SaveCity: UiEvent()
+        data class ShowSnackbar(val message: String) : UiEvent()
+        object SaveCity : UiEvent()
     }
-
 }

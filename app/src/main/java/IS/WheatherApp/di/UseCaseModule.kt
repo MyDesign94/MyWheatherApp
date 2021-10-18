@@ -2,7 +2,7 @@ package IS.WheatherApp.di
 
 import IS.WheatherApp.feature_wheather.domain.repository.db_repository.CitiesRepository
 import IS.WheatherApp.feature_wheather.domain.repository.weather_repository.WeatherRepository
-import IS.WheatherApp.feature_wheather.domain.use_case.db_use_case.*
+import IS.WheatherApp.feature_wheather.domain.use_case.db_use_case.* // ktlint-disable no-wildcard-imports
 import IS.WheatherApp.feature_wheather.domain.use_case.weather_use_case.GetWeatherUseCase
 import IS.WheatherApp.feature_wheather.domain.use_case.weather_use_case.WeatherUseCase
 import dagger.Module

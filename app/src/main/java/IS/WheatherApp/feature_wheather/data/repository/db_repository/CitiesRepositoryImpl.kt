@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 class CitiesRepositoryImpl(
     private val dao: CityDao
-): CitiesRepository {
+) : CitiesRepository {
     override fun getCities(): Flow<List<City>> {
         return dao.getCities()
     }

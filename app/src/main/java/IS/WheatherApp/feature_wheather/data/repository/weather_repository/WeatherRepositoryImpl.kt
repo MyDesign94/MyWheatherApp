@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class WeatherRepositoryImpl @Inject constructor(
     private val api: YandexWeatherApi
-): WeatherRepository {
+) : WeatherRepository {
     override suspend fun getWeather(
         lat: String,
         lon: String

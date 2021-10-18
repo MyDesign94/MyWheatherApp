@@ -3,8 +3,8 @@ package IS.WheatherApp.feature_wheather.presentation.add_city
 import IS.WheatherApp.feature_wheather.presentation.add_city.component.TransparentHintTextField
 import IS.WheatherApp.feature_wheather.presentation.add_city.old_ver.AddCityViewModel
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.* // ktlint-disable no-wildcard-imports
+import androidx.compose.material.* // ktlint-disable no-wildcard-imports
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.Composable
@@ -19,14 +19,14 @@ import kotlinx.coroutines.flow.collectLatest
 fun AddCityScreen(
     navController: NavController,
     viewModel: AddCityViewModel = hiltViewModel()
-){
+) {
     val latState = viewModel.cityLatitude.value
     val lonState = viewModel.cityLongitude.value
     val scaffoldState = rememberScaffoldState()
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
-            when(event) {
+            when (event) {
                 is AddCityViewModel.UiEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = event.message
@@ -60,9 +60,9 @@ fun AddCityScreen(
         ) {
             Spacer(modifier = Modifier.height(16.dp))
             TransparentHintTextField(
-                text =latState.text,
-                hint =latState.hint,
-                onValueChange ={
+                text = latState.text,
+                hint = latState.hint,
+                onValueChange = {
                     viewModel.onEvent(AddCityEvent.EnteredLat(it))
                 },
                 onFocusChange = {
@@ -74,9 +74,9 @@ fun AddCityScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             TransparentHintTextField(
-                text =lonState.text,
-                hint =lonState.hint,
-                onValueChange ={
+                text = lonState.text,
+                hint = lonState.hint,
+                onValueChange = {
                     viewModel.onEvent(AddCityEvent.EnteredLon(it))
                 },
                 onFocusChange = {

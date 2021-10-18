@@ -1,9 +1,6 @@
 package IS.WheatherApp.feature_wheather.presentation.main_wheather
 
-import IS.WheatherApp.feature_wheather.domain.model.weather_model.CurrentCityWeather
 import IS.WheatherApp.feature_wheather.domain.use_case.db_use_case.CitiesUseCase
-import IS.WheatherApp.feature_wheather.domain.use_case.weather_use_case.WeatherUseCase
-import IS.WheatherApp.feature_wheather.domain.util.Resource
 import IS.WheatherApp.feature_wheather.domain.util.TimePeriod
 import android.util.Log
 import androidx.compose.runtime.State
@@ -14,8 +11,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.WeatherService.WeatherModels.WeatherDataClass
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,7 +18,7 @@ import javax.inject.Inject
 class MainWeatherViewModel @Inject constructor(
     private val citiesUseCase: CitiesUseCase,
     savedStateHandle: SavedStateHandle
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = mutableStateOf(MainWeatherState())
     val state: State<MainWeatherState> = _state

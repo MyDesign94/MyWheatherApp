@@ -6,9 +6,9 @@ import IS.WheatherApp.feature_wheather.presentation.ui.theme.BackgroundCardColor
 import IS.WheatherApp.feature_wheather.presentation.ui.theme.NxtDays
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.* // ktlint-disable no-wildcard-imports
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
+import androidx.compose.material.* // ktlint-disable no-wildcard-imports
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.runtime.Composable
@@ -35,7 +35,7 @@ fun LocationItem(
             .clickable {
                 val dataJson = Gson().toJson(data)
                 navController.navigate(
-                    Screen.ResultAddNewLocation.route + "?data=${dataJson}"
+                    Screen.ResultAddNewLocation.route + "?data=$dataJson"
                 )
             },
         contentAlignment = Alignment.Center
@@ -50,12 +50,11 @@ fun LocationItem(
     }
 }
 
-
 @ExperimentalMaterialApi
 @Composable
 fun MyLocation(
     navController: NavController
-){
+) {
     Box(
         modifier = Modifier
             .padding(4.dp)
@@ -63,14 +62,16 @@ fun MyLocation(
             .clip(CircleShape)
             .background(BackgroundCardColor)
             .clickable {
-                val dataJson = Gson().toJson(StandardLocation(
-                    name = "Locate",
-                    lat = -1.0,
-                    lon = -1.0
-                ))
+                val dataJson = Gson().toJson(
+                    StandardLocation(
+                        name = "Locate",
+                        lat = -1.0,
+                        lon = -1.0
+                    )
+                )
                 navController.navigate(
                     Screen.ResultAddNewLocation.route +
-                            "?data=${dataJson}"
+                        "?data=$dataJson"
                 )
             }
     ) {

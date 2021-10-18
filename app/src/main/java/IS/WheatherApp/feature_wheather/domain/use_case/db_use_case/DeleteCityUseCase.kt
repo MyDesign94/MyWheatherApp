@@ -6,7 +6,7 @@ import IS.WheatherApp.feature_wheather.domain.repository.db_repository.CitiesRep
 class DeleteCityUseCase(
     private val repository: CitiesRepository
 ) {
-    suspend operator fun invoke(city: City){
+    suspend operator fun invoke(city: City) {
         repository.deleteCity(city)
     }
 }

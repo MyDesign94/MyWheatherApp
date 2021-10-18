@@ -4,7 +4,7 @@ import IS.WheatherApp.feature_wheather.domain.model.City
 import IS.WheatherApp.feature_wheather.domain.repository.db_repository.CitiesRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetCitiesUseCase (
+class GetCitiesUseCase(
     private val repository: CitiesRepository
 ) {
 
