@@ -3,6 +3,7 @@ package IS.WheatherApp.feature_wheather.presentation
 import IS.WheatherApp.feature_wheather.domain.util.APP_ACTIVITY
 import IS.WheatherApp.feature_wheather.domain.util.Screen
 import IS.WheatherApp.feature_wheather.presentation.add_city.AddNewLocationScreen
+import IS.WheatherApp.feature_wheather.presentation.add_city.component.GoogleMapScreen
 import IS.WheatherApp.feature_wheather.presentation.main_wheather.MainWeatherScreen
 import IS.WheatherApp.feature_wheather.presentation.manager_cities.ManagerCitiesScreen
 import IS.WheatherApp.feature_wheather.presentation.nex_seven_days.NextSevenDaysScreen
@@ -91,6 +92,11 @@ class MainActivity : ComponentActivity() {
                             )
                         ) {
                             ResultAddNewLocation(navController = navController)
+                        }
+                        composable(
+                            route = Screen.GoogleMap.route
+                        ) {
+                            GoogleMapScreen()
                         }
                     }
                 }

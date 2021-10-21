@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/3ndan/AndroidStudioProjects/LCcodlab/MyWheatherApp/app/src/main/res/layout/activity_maps.xml" value="0.209375" />
+        <entry key="..\:/Users/3ndan/AndroidStudioProjects/LCcodlab/MyWheatherApp/app/src/main/res/layout/fragment_search_field.xml" value="0.209375" />
         <entry key="..\:/Users/3ndan/AndroidStudioProjects/LCcodlab/MyWheatherApp/app/src/main/res/layout/seach_fild.xml" value="0.209375" />
+        <entry key="..\:/Users/3ndan/AndroidStudioProjects/LCcodlab/MyWheatherApp/app/src/main/res/layout/search_field.xml" value="0.209375" />
       </map>
     </option>
   </component>

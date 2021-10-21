@@ -1,6 +1,7 @@
 package IS.WheatherApp.feature_wheather.presentation.add_city
 
 import IS.WheatherApp.feature_wheather.domain.util.SET_OF_LOCATIONS
+import IS.WheatherApp.feature_wheather.domain.util.Screen
 import IS.WheatherApp.feature_wheather.presentation.add_city.component.LocationItem
 import IS.WheatherApp.feature_wheather.presentation.add_city.component.MyLocation
 import IS.WheatherApp.feature_wheather.presentation.add_city.old_ver.AddCityViewModel
@@ -94,7 +95,7 @@ fun AddNewLocationScreen(
                             modifier = Modifier
                                 .clip(CircleShape)
                                 .background(BackgroundCardColor)
-                                .clickable { }
+                                .clickable { navController.navigate(Screen.GoogleMap.route) }
                         )
                     },
                     modifier = Modifier
