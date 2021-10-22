@@ -96,7 +96,7 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = Screen.GoogleMap.route
                         ) {
-                            GoogleMapScreen()
+                            GoogleMapScreen(navController)
                         }
                     }
                 }
