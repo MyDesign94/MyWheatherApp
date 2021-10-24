@@ -8,8 +8,6 @@ import IS.WheatherApp.feature_wheather.presentation.ui.theme.BackgroundCardColor
 import IS.WheatherApp.feature_wheather.presentation.ui.theme.NxtDays
 import IS.WheatherApp.feature_wheather.presentation.ui.theme.TextColor3
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.* // ktlint-disable no-wildcard-imports
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items

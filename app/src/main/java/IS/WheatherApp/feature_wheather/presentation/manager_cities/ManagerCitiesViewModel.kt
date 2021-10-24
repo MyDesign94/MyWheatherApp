@@ -8,7 +8,6 @@ import IS.WheatherApp.feature_wheather.domain.util.Resource
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.WeatherService.WeatherModels.WeatherDataClass
@@ -84,7 +83,7 @@ class ManagerCitiesViewModel @Inject constructor(
                                     }
                                     is Resource.Error -> {
                                         Log.e("error update", result.message!!)
-                                        loadError.value = result.message!!
+                                        loadError.value = result.message
                                         isLoading.value = false
                                     }
                                 }

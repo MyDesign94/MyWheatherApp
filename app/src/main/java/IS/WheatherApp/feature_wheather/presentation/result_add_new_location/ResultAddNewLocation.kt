@@ -8,7 +8,6 @@ import IS.WheatherApp.feature_wheather.presentation.ui.theme.TextColor2
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.* // ktlint-disable no-wildcard-imports
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.* // ktlint-disable no-wildcard-imports
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -31,7 +30,6 @@ fun ResultAddNewLocation(
     val state = viewModel.state.value
     val stateWeather = viewModel.stateWeather.value
     val scaffoldState = rememberScaffoldState()
-    val scrollState = rememberScrollState()
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
