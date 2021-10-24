@@ -8,6 +8,7 @@ import IS.WheatherApp.feature_wheather.domain.util.Resource
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.WeatherService.WeatherModels.WeatherDataClass
@@ -51,9 +52,9 @@ class ManagerCitiesViewModel @Inject constructor(
                         Log.e(
                             "update",
                             "${city.name} time left: ${(
-                                (System.currentTimeMillis() / 1000) -
-                                    weatherData.now
-                                ) / 60}min"
+                                    (System.currentTimeMillis() / 1000) -
+                                            weatherData.now
+                                    ) / 60}min"
                         )
                         city.id?.let {
                             weatherUseCase.getWeather(lat = city.lat, lon = city.lon).onEach { result ->
@@ -93,9 +94,9 @@ class ManagerCitiesViewModel @Inject constructor(
                         Log.e(
                             "no update",
                             "${city.name} time left: ${(
-                                (System.currentTimeMillis() / 1000) -
-                                    weatherData.now
-                                ) / 60}min"
+                                    (System.currentTimeMillis() / 1000) -
+                                            weatherData.now
+                                    ) / 60}min"
                         )
                         allWeather.value += CurrentCityWeather(
                             id = city.id!!,

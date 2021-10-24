@@ -100,7 +100,7 @@ class ResultAddNewLocationViewModel @Inject constructor(
                 citiesUseCase.addCity(
                     City(
                         lat = state.value.data?.lat.toString(),
-                        lon = state.value.data?.lat.toString(),
+                        lon = state.value.data?.lon.toString(),
                         id = currentCityId,
                         name = getAddress(
                             lat = state.value.data!!.lat,

@@ -77,44 +77,17 @@ fun MainWeatherScreen(
                             modifier = Modifier
                                 .padding(top = 40.dp, end = 20.dp)
                                 .height(30.dp),
-                            actions = {
-                                Icon(
-                                    Icons.Filled.ShortText,
-                                    contentDescription = "settings",
-                                    tint = Color.White,
-                                    modifier = Modifier.clickable { }
-                                )
-                            },
                             backgroundColor = Color.Transparent,
                             elevation = 0.dp
                         )
                     },
                     backLayerContent = {
-                        if (timePeriod == TimePeriod.ToDay) {
-                            BackLayerWeather(
-                                cityId = state.cityId,
-                                navController = navController,
-                                timePeriod = timePeriod,
-                                weatherData = state.weatherData,
-                                basicWeatherData = BackLayerData(
-                                    temp = state.weatherData.fact.temp.toString(),
-                                    feelsLike = state.weatherData.fact.feels_like.toString(),
-                                    condition = state.weatherData.fact.condition
-                                )
-                            )
-                        } else {
-                            BackLayerWeather(
-                                timePeriod = timePeriod,
-                                weatherData = state.weatherData,
-                                basicWeatherData = BackLayerData(
-                                    temp = state.weatherData.forecasts[1].parts.day.temp_avg.toString(),
-                                    feelsLike = state.weatherData.forecasts[1].parts.day.feels_like.toString(),
-                                    condition = state.weatherData.forecasts[1].parts.day.condition
-                                ),
-                                navController = navController,
-                                cityId = state.cityId
-                            )
-                        }
+                        BackLayerWeather(
+                            timePeriod = timePeriod,
+                            weatherData = state.weatherData,
+                            navController = navController,
+                            cityId = state.cityId
+                        )
                     },
                     frontLayerContent = {
                         if (timePeriod == TimePeriod.ToDay) {
@@ -159,8 +132,6 @@ fun MainWeatherScreen(
 private fun BackLayerWeather(
     timePeriod: TimePeriod,
     weatherData: WeatherDataClass?,
-    viewModel: MainWeatherViewModel = hiltViewModel(),
-    basicWeatherData: BackLayerData,
     navController: NavController,
     cityId: Int
 ) {
@@ -186,7 +157,7 @@ private fun BackLayerWeather(
             weatherData = weatherData,
             modifier = Modifier.constrainAs(detailedInf) {
                 bottom.linkTo(parent.bottom, margin = 40.dp)
-            },
+            }
         )
     }
 }
@@ -274,7 +245,7 @@ fun DetailedInformationInTime(
                 Spacer(modifier = Modifier.weight(1f))
                 TextButton(onClick = {
                     navController.navigate(
-                        Screen.WeatherNextSevenDays.route + "?cityId=${viewModel.state.value.cityId}"
+                        Screen.WeatherNextSevenDays.route + "?cityId=${cityId}"
                     )
                 }) {
                     Text(
@@ -312,12 +283,8 @@ fun DetailedInformationInTime(
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 TextButton(onClick = {
-                    val dataJson = Gson().toJson(viewModel.state.value)
                     navController.navigate(
-                        Screen.WeatherNextSevenDays.route + "?data=$dataJson"
-                        // We have two options
-                        // 1 - pass only cityId and receive all data through the weather service
-                        // 2 - pass all required parameters for this screen to Json
+                        Screen.WeatherNextSevenDays.route + "?cityId=${cityId}"
                     )
                 }) {
                     Text(

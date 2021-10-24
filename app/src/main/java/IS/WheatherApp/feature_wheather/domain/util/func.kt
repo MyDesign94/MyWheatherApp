@@ -8,10 +8,10 @@ import java.util.* // ktlint-disable no-wildcard-imports
 
 fun collectionsOfItemsRow(weatherData: WeatherDataClass?, dayTime: Int = 0): MutableList<RowTimeWeatherItems> {
     if (weatherData != null) {
-        val currentH = if (weatherData.now_dt.split("T")[1].substring(0, 2).toInt() + 3 > 23) {
-            weatherData.now_dt.split("T")[1].substring(0, 2).toInt() - 21
+        val currentH = if (weatherData.now_dt.split("T")[1].substring(0, 2).toInt() + (weatherData.info.tzinfo.offset/3600) > 23) {
+            weatherData.now_dt.split("T")[1].substring(0, 2).toInt() - (24 - (weatherData.info.tzinfo.offset/3600))
         } else {
-            weatherData.now_dt.split("T")[1].substring(0, 2).toInt() + 3
+            weatherData.now_dt.split("T")[1].substring(0, 2).toInt() + (weatherData.info.tzinfo.offset/3600)
         }
         val items = mutableListOf<RowTimeWeatherItems>()
         for (i in currentH.rangeTo(23)) {

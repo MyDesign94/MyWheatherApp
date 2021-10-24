@@ -1,5 +1,6 @@
 package IS.WheatherApp.feature_wheather.presentation.add_city
 
+import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -9,9 +10,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class AddNewLocationViewModel : ViewModel() {
+class AddNewLocationViewModel @Inject constructor(
+    private val context: Context
+): ViewModel() {
 
     private val _data = mutableStateOf("")
     val data: State<String> = _data
