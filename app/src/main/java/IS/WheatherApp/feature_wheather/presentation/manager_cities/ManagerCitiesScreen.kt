@@ -1,5 +1,6 @@
 package IS.WheatherApp.feature_wheather.presentation.manager_cities
 
+import IS.WheatherApp.feature_wheather.domain.model.weather_model.CurrentCityWeather
 import IS.WheatherApp.feature_wheather.domain.util.Screen
 import IS.WheatherApp.feature_wheather.presentation.manager_cities.component.CitiesItem
 import IS.WheatherApp.feature_wheather.presentation.ui.theme.NxtDays
@@ -13,6 +14,7 @@ import androidx.compose.runtime.* // ktlint-disable no-wildcard-imports
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -22,7 +24,31 @@ fun ManagerCitiesScreen(
     navController: NavController,
     viewModel: ManagerCitiesViewModel = hiltViewModel()
 ) {
-    val cities by remember { viewModel.allWeather }
+    val cities = viewModel.allWeather.value
+    ManagerCities(navController = navController, cities = cities)
+
+}
+
+@Composable
+fun Loading(){
+    Box(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier.size(46.dp),
+            strokeWidth = 4.dp,
+            color = Color.White
+        )
+    }
+}
+
+@Composable
+fun ManagerCities(
+    navController: NavController,
+    cities: List<CurrentCityWeather>
+) {
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         floatingActionButton = {
@@ -56,7 +82,7 @@ fun ManagerCitiesScreen(
                     CitiesItem(city = city, onItemClick = {
                         navController.navigate(
                             Screen.MainWeatherScreen.route +
-                                "?cityId=${city.id}"
+                                    "?cityId=${city.id}"
                         )
                     })
                 }

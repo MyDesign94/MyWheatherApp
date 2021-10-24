@@ -1,7 +1,7 @@
 package IS.WheatherApp.feature_wheather.presentation.add_city.component
 
+import IS.WheatherApp.feature_wheather.domain.model.location_model.StandardLocation
 import IS.WheatherApp.feature_wheather.domain.util.Screen
-import IS.WheatherApp.feature_wheather.domain.util.StandardLocation
 import IS.WheatherApp.feature_wheather.presentation.ui.theme.BackgroundCardColor
 import IS.WheatherApp.feature_wheather.presentation.ui.theme.NxtDays
 import androidx.compose.foundation.background
@@ -35,7 +35,8 @@ fun LocationItem(
             .clickable {
                 val dataJson = Gson().toJson(data)
                 navController.navigate(
-                    Screen.ResultAddNewLocation.route + "?data=$dataJson"
+                    Screen.ResultAddNewLocation.route +
+                            "?data=$dataJson"
                 )
             },
         contentAlignment = Alignment.Center

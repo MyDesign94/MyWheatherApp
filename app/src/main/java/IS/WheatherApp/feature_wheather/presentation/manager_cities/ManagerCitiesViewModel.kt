@@ -8,6 +8,7 @@ import IS.WheatherApp.feature_wheather.domain.util.Resource
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.WeatherService.WeatherModels.WeatherDataClass
@@ -37,49 +38,6 @@ class ManagerCitiesViewModel @Inject constructor(
         getCities()
     }
 
-    private fun getWeather(lat: String, lon: String, id: Int, name: String) {
-        Log.e("manager_city_vm_gps", "$lat - $lon - $id")
-        weatherUseCase.getWeather(lat = lat, lon = lon).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    result.data?.let {
-                        allWeather.value += CurrentCityWeather(
-                            id = id,
-                            name = name,
-                            icon = result.data.fact.condition,
-                            lat = lat,
-                            lon = lon,
-                            tempNow = result.data.fact.temp.toString(),
-                            weatherData = result.data
-                        )
-                        Log.e("allWeather.vale", allWeather.value.size.toString())
-                        citiesUseCase.updateCity(
-                            City(
-                                id = id,
-                                name = name,
-                                lat = lat,
-                                lon = lon,
-                                icon = result.data.fact.condition,
-                                tempNow = result.data.fact.temp.toString(),
-                                weatherData = Gson().toJson(result.data)
-                            )
-                        )
-                    }
-                    loadError.value = ""
-                    isLoading.value = false
-                }
-                is Resource.Loading -> {
-                    loadError.value = ""
-                    isLoading.value = true
-                }
-                is Resource.Error -> {
-                    loadError.value = result.message!!
-                    isLoading.value = false
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
     private fun getCities() {
         getCitiesJob?.cancel()
         getCitiesJob = citiesUseCase
@@ -94,9 +52,9 @@ class ManagerCitiesViewModel @Inject constructor(
                         Log.e(
                             "update",
                             "${city.name} time left: ${(
-                                (System.currentTimeMillis() / 1000) -
-                                    weatherData.now
-                                ) / 60}min"
+                                    (System.currentTimeMillis() / 1000) -
+                                            weatherData.now
+                                    ) / 60}min"
                         )
                         city.id?.let {
                             weatherUseCase.getWeather(lat = city.lat, lon = city.lon).onEach { result ->
@@ -136,9 +94,9 @@ class ManagerCitiesViewModel @Inject constructor(
                         Log.e(
                             "no update",
                             "${city.name} time left: ${(
-                                (System.currentTimeMillis() / 1000) -
-                                    weatherData.now
-                                ) / 60}min"
+                                    (System.currentTimeMillis() / 1000) -
+                                            weatherData.now
+                                    ) / 60}min"
                         )
                         allWeather.value += CurrentCityWeather(
                             id = city.id!!,
@@ -156,5 +114,10 @@ class ManagerCitiesViewModel @Inject constructor(
                 )
             }
             .launchIn(viewModelScope)
+    }
+
+    sealed class UIEvent {
+        object ClickOnItem : UIEvent()
+        object AddNewLocation : UIEvent()
     }
 }

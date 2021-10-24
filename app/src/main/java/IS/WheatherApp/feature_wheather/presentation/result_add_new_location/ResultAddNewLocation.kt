@@ -48,68 +48,66 @@ fun ResultAddNewLocation(
         }
     }
 
-    state.data?.let {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(text = state.data.name)
-                    },
-                    navigationIcon = {
-                        Icon(
-                            Icons.Filled.ArrowBack,
-                            contentDescription = "navigation",
-                            tint = Color.White,
-                            modifier = Modifier.clickable {
-                                navController.navigateUp()
-                            }
-                        )
-                    },
-                    modifier = Modifier
-                        .padding(top = 40.dp, end = 20.dp)
-                        .height(30.dp),
-                    backgroundColor = Color.Transparent,
-                    elevation = 0.dp
-                )
-            },
-            scaffoldState = scaffoldState
-        ) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                stateWeather.weatherData?.let { data ->
-                    for (i in 0..6) {
-                        item {
-                            WeekItem(
-                                dayOfWeek = getListOfDaysOfWeek()[i],
-                                day = data.forecasts[i].date.substring(5, 10),
-                                weatherDay = data.forecasts[i].parts.day.temp_avg,
-                                weatherNight = data.forecasts[i].parts.night.temp_avg,
-                                icon = data.forecasts[i].parts.day.condition
-                            )
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = state.data?.name!!)
+                },
+                navigationIcon = {
+                    Icon(
+                        Icons.Filled.ArrowBack,
+                        contentDescription = "navigation",
+                        tint = Color.White,
+                        modifier = Modifier.clickable {
+                            navController.navigateUp()
                         }
-                    }
-                }
-                item {
-                    FloatingActionButton(
-                        onClick = { viewModel.onEvent() },
-                        backgroundColor = NxtDays,
-                        modifier = Modifier.padding(top = 40.dp)
-                    ) {
-                        Icon(imageVector = Icons.Default.Add, contentDescription = "Save")
-                    }
-                }
-                item {
-                    Text(
-                        text = "Add to start page",
-                        style = MaterialTheme.typography.subtitle2,
-                        color = TextColor2,
-                        modifier = Modifier.padding(top = 3.dp)
                     )
+                },
+                modifier = Modifier
+                    .padding(top = 40.dp, end = 20.dp)
+                    .height(30.dp),
+                backgroundColor = Color.Transparent,
+                elevation = 0.dp
+            )
+        },
+        scaffoldState = scaffoldState
+    ) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            stateWeather.weatherData?.let { data ->
+                for (i in 0..6) {
+                    item {
+                        WeekItem(
+                            dayOfWeek = getListOfDaysOfWeek()[i],
+                            day = data.forecasts[i].date.substring(5, 10),
+                            weatherDay = data.forecasts[i].parts.day.temp_avg,
+                            weatherNight = data.forecasts[i].parts.night.temp_avg,
+                            icon = data.forecasts[i].parts.day.condition
+                        )
+                    }
                 }
+            }
+            item {
+                FloatingActionButton(
+                    onClick = { viewModel.onEvent() },
+                    backgroundColor = NxtDays,
+                    modifier = Modifier.padding(top = 40.dp)
+                ) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = "Save")
+                }
+            }
+            item {
+                Text(
+                    text = "Add to start page",
+                    style = MaterialTheme.typography.subtitle2,
+                    color = TextColor2,
+                    modifier = Modifier.padding(top = 3.dp)
+                )
             }
         }
     }

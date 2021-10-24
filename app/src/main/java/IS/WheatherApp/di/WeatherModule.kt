@@ -20,7 +20,6 @@ object WeatherModule {
     @Singleton
     fun provideYandexWeatherApi(): YandexWeatherApi {
         return Retrofit.Builder()
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("https://api.weather.yandex.ru")
             .build()
