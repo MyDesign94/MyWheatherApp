@@ -37,49 +37,6 @@ class ManagerCitiesViewModel @Inject constructor(
         getCities()
     }
 
-    private fun getWeather(lat: String, lon: String, id: Int, name: String) {
-        Log.e("manager_city_vm_gps", "$lat - $lon - $id")
-        weatherUseCase.getWeather(lat = lat, lon = lon).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    result.data?.let {
-                        allWeather.value += CurrentCityWeather(
-                            id = id,
-                            name = name,
-                            icon = result.data.fact.condition,
-                            lat = lat,
-                            lon = lon,
-                            tempNow = result.data.fact.temp.toString(),
-                            weatherData = result.data
-                        )
-                        Log.e("allWeather.vale", allWeather.value.size.toString())
-                        citiesUseCase.updateCity(
-                            City(
-                                id = id,
-                                name = name,
-                                lat = lat,
-                                lon = lon,
-                                icon = result.data.fact.condition,
-                                tempNow = result.data.fact.temp.toString(),
-                                weatherData = Gson().toJson(result.data)
-                            )
-                        )
-                    }
-                    loadError.value = ""
-                    isLoading.value = false
-                }
-                is Resource.Loading -> {
-                    loadError.value = ""
-                    isLoading.value = true
-                }
-                is Resource.Error -> {
-                    loadError.value = result.message!!
-                    isLoading.value = false
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
     private fun getCities() {
         getCitiesJob?.cancel()
         getCitiesJob = citiesUseCase
@@ -156,5 +113,10 @@ class ManagerCitiesViewModel @Inject constructor(
                 )
             }
             .launchIn(viewModelScope)
+    }
+
+    sealed class UIEvent {
+        object ClickOnItem : UIEvent()
+        object AddNewLocation : UIEvent()
     }
 }

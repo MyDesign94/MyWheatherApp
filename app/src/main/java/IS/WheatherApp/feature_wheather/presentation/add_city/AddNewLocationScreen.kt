@@ -5,7 +5,6 @@ import IS.WheatherApp.feature_wheather.domain.util.SET_OF_LOCATIONS
 import IS.WheatherApp.feature_wheather.domain.util.Screen
 import IS.WheatherApp.feature_wheather.presentation.add_city.component.LocationItem
 import IS.WheatherApp.feature_wheather.presentation.add_city.component.MyLocation
-import IS.WheatherApp.feature_wheather.presentation.add_city.old_ver.AddCityViewModel
 import IS.WheatherApp.feature_wheather.presentation.ui.theme.BackgroundCardColor
 import IS.WheatherApp.feature_wheather.presentation.ui.theme.NxtDays
 import IS.WheatherApp.feature_wheather.presentation.ui.theme.TextColor2
@@ -38,20 +37,21 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun AddNewLocationScreen(
     navController: NavController,
-    viewModel: AddCityViewModel = hiltViewModel()
+    viewModel: AddNewLocationViewModel = hiltViewModel()
 ) {
-    val scaffoldState = rememberScaffoldState()
+    val data = viewModel.data.value
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
-                is AddCityViewModel.UiEvent.ShowSnackbar -> {
-                    scaffoldState.snackbarHostState.showSnackbar(
-                        message = event.message
+                is AddNewLocationViewModel.UiEvent.ChosePopularLocation -> {
+                    navController.navigate(
+                        Screen.ResultAddNewLocation.route +
+                            "?data=$data"
                     )
                 }
-                is AddCityViewModel.UiEvent.SaveCity -> {
-                    navController.navigateUp()
+                is AddNewLocationViewModel.UiEvent.GoogleMap -> {
+                    navController.navigate(Screen.GoogleMap.route)
                 }
             }
         }
@@ -79,7 +79,7 @@ fun AddNewLocationScreen(
                         .clip(CircleShape)
                         .background(BackgroundCardColor)
                         .clickable {
-                            navController.navigate(Screen.GoogleMap.route)
+                            viewModel.onEvent(AddCityEvent.GoogleMap)
                         },
                     contentAlignment = Alignment.Center
                 ) {

@@ -33,10 +33,7 @@ fun LocationItem(
             .clip(CircleShape)
             .background(BackgroundCardColor)
             .clickable {
-                val dataJson = Gson().toJson(data)
-                navController.navigate(
-                    Screen.ResultAddNewLocation.route + "?data=$dataJson"
-                )
+
             },
         contentAlignment = Alignment.Center
     ) {

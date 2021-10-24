@@ -3,7 +3,6 @@ package IS.WheatherApp.feature_wheather.presentation.google_map
 import IS.WheatherApp.BuildConfig
 import IS.WheatherApp.feature_wheather.domain.util.APP_ACTIVITY
 import IS.WheatherApp.feature_wheather.domain.util.StandardLocation
-import IS.WheatherApp.feature_wheather.presentation.add_city.AddNewLocationViewModel
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Context
 import android.content.pm.PackageManager
@@ -180,7 +179,7 @@ class GoogleMapViewModel @Inject constructor(
         return try {
             geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)[0]
         } catch (e: Exception) {
-            AddNewLocationViewModel.UiEvent.ShowSnackbar(message = e.message ?: "Cant find location")
+            UiEvent.ShowSnackbar(message = e.message ?: "Cant find location")
             null
         }
     }
@@ -191,6 +190,7 @@ class GoogleMapViewModel @Inject constructor(
     }
 
     sealed class UiEvent {
+        data class ShowSnackbar(val message: String) : UiEvent()
         object SaveLocation : UiEvent()
     }
 }
