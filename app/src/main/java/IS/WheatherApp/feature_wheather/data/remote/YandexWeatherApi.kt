@@ -12,6 +12,7 @@ interface YandexWeatherApi {
     @GET("v2/forecast")
     suspend fun getWeather(
         @Query("lat") lat: String,
-        @Query("lon") lon: String
+        @Query("lon") lon: String,
+        @Query("lang") lang: String = "en_US",
     ): WeatherDataClass
 }
