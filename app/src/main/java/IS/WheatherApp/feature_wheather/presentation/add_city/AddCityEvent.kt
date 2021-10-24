@@ -1,6 +1,6 @@
 package IS.WheatherApp.feature_wheather.presentation.add_city
 
-import IS.WheatherApp.feature_wheather.domain.util.StandardLocation
+import IS.WheatherApp.feature_wheather.domain.model.location_model.StandardLocation
 
 sealed class AddCityEvent {
     object GoogleMap : AddCityEvent()

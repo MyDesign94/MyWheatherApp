@@ -7,9 +7,9 @@ import IS.WheatherApp.feature_wheather.presentation.main_wheather.component.icon
 import IS.WheatherApp.feature_wheather.presentation.ui.theme.BackgroundCardColor
 import IS.WheatherApp.feature_wheather.presentation.ui.theme.NxtDays
 import IS.WheatherApp.feature_wheather.presentation.ui.theme.TextColor3
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.* // ktlint-disable no-wildcard-imports
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -18,7 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.* // ktlint-disable no-wildcard-imports
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ShortText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,11 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.weatherapp.WeatherService.WeatherModels.BackLayerData
 import com.example.weatherapp.WeatherService.WeatherModels.FrontLayerData
 import com.example.weatherapp.WeatherService.WeatherModels.RowTimeWeatherItems
 import com.example.weatherapp.WeatherService.WeatherModels.WeatherDataClass
-import com.google.gson.Gson
 
 @ExperimentalMaterialApi
 @Composable
@@ -48,12 +45,6 @@ fun MainWeatherScreen(
     val timePeriod = viewModel.timePeriod.value
     Box(modifier = Modifier.fillMaxSize()) {
         state.weatherData?.let {
-//            Image(
-//                painter = painterResource(id = R.drawable.bg_photo),
-//                contentDescription = "spb_back",
-//                modifier = Modifier.fillMaxSize(),
-//                contentScale = ContentScale.Crop
-//            )
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -84,6 +75,7 @@ fun MainWeatherScreen(
                     backLayerContent = {
                         BackLayerWeather(
                             timePeriod = timePeriod,
+                            state = state,
                             weatherData = state.weatherData,
                             navController = navController,
                             cityId = state.cityId
@@ -133,15 +125,19 @@ private fun BackLayerWeather(
     timePeriod: TimePeriod,
     weatherData: WeatherDataClass?,
     navController: NavController,
-    cityId: Int
+    cityId: Int,
+    state: MainWeatherState
 ) {
 
-    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+    ConstraintLayout(modifier = Modifier
+        .fillMaxSize()
+    ) {
         val (basicInf, detailedInf, spacer) = createRefs()
         BasicInformation(
             modifier = Modifier.constrainAs(basicInf) {
                 top.linkTo(parent.top)
-            }
+            },
+            state = state
         )
         Spacer(
             modifier = Modifier
@@ -165,10 +161,9 @@ private fun BackLayerWeather(
 @Composable
 fun BasicInformation(
     modifier: Modifier = Modifier,
-    viewModel: MainWeatherViewModel = hiltViewModel()
+    state: MainWeatherState
 ) {
-    val state = viewModel.state.value
-    state.weatherData?.let { weatherDataClass ->
+    state.weatherData.let { weatherDataClass ->
         Column(modifier = modifier) {
             Text(
                 text = state.name,
@@ -178,7 +173,7 @@ fun BasicInformation(
                 style = MaterialTheme.typography.h4
             )
             Text(
-                text = weatherDataClass.fact.condition,
+                text = weatherDataClass!!.fact.condition,
                 modifier = Modifier
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center,

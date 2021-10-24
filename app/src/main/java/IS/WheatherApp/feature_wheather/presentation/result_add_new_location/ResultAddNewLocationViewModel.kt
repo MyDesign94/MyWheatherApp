@@ -2,12 +2,12 @@ package IS.WheatherApp.feature_wheather.presentation.result_add_new_location
 
 import IS.WheatherApp.feature_wheather.domain.model.City
 import IS.WheatherApp.feature_wheather.domain.model.InvalidCityItemException
+import IS.WheatherApp.feature_wheather.domain.model.location_model.StandardLocation
 import IS.WheatherApp.feature_wheather.domain.use_case.db_use_case.CitiesUseCase
 import IS.WheatherApp.feature_wheather.domain.use_case.weather_use_case.WeatherUseCase
 import IS.WheatherApp.feature_wheather.domain.util.APP_ACTIVITY
 import IS.WheatherApp.feature_wheather.domain.util.LocationLiveData
 import IS.WheatherApp.feature_wheather.domain.util.Resource
-import IS.WheatherApp.feature_wheather.domain.util.StandardLocation
 import IS.WheatherApp.feature_wheather.presentation.main_wheather.MainWeatherState
 import android.content.Context
 import android.location.Geocoder

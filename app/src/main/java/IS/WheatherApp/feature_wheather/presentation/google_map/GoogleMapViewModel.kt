@@ -1,8 +1,8 @@
 package IS.WheatherApp.feature_wheather.presentation.google_map
 
 import IS.WheatherApp.BuildConfig
+import IS.WheatherApp.feature_wheather.domain.model.location_model.StandardLocation
 import IS.WheatherApp.feature_wheather.domain.util.APP_ACTIVITY
-import IS.WheatherApp.feature_wheather.domain.util.StandardLocation
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Context
 import android.content.pm.PackageManager
